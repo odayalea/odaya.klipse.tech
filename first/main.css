@@ -1,8 +1,4 @@
 .framed  {
- 
- style="box-shadow:0 0 8px black;
-              border:1px solid white;
-              -webkit-transform:rotate(-5deg);
-              -moz-transform:rotate(-5deg);
-              transform:rotate(-5deg);
-              }
+ box-shadow:0 0 8px black;
+ border:1px solid white;
+}
