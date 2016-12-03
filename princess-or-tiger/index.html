@@ -15,7 +15,6 @@
 
 <!-- Extension CSS files go here. Remove or add as needed. -->
 <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/goto/deck.goto.css">
-<link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/menu/deck.menu.css">
 <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/navigation/deck.navigation.css">
 <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/status/deck.status.css">
 <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/scale/deck.scale.css">
@@ -27,7 +26,6 @@
 </head>
 
 
-<body dir="rtl">
 <style>
 body {
   color: black;
@@ -50,6 +48,8 @@ div {
   background-size:100%;
 }
 </style>
+
+<body dir="rtl">
 <div class="deck-container">
 
 <section class="slide">
@@ -57,8 +57,10 @@ div {
     משחק הגיון
 <br/>
 <br/>
-מצא את הנסיכה  </h1>
+מצא את הנסיכה
+</h1>
 </section>
+
 <section class="slide">
   <h2>
      השלב הראשון: שלט אחד דובר אמת ושלט אחר משקר
@@ -130,28 +132,7 @@ fullscreenSelector: 'h2, fullscreen'
         });
         </script>
 
-        <script>
-        window.score = 0;
-        $('.tiger').each(function(x, elem) {
-          $(elem).click(function() {
-             window.score--;
-             $('#score').text(window.score);
-             $('.feedback').text("נמר");
-          });
-        });
-
-        $('.princess').each(function(x, elem) {
-          $(elem).click(function(){
-             window.score++;
-             $('#score').text(window.score);
-             $('.feedback').text("נסיכה");
-           })
-        });
+        <script src="./game.js">
         </script>
-
-
-
-
-
         </body>
         </html>
