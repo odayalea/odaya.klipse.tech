@@ -2,7 +2,7 @@
     let state = {
         riddles: [
         {
-            question: "2+2=?",
+            question: "הגיל שלי הוא 5 פעמים הגיל שלך. מהו הגיל שלי?",
             correctAnswer: "4",
             isCorrect: false,
             answer: "",
@@ -62,7 +62,7 @@
                     {className: "game"},
                     this.state.riddles.map((riddle, i) => React.createElement(
                             "div",
-                            {},
+                        {className: "riddle"},
                             [React.createElement(
                                 Question,
                                 {
