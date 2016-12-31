@@ -4,6 +4,7 @@ import {bindActionCreators} from 'redux';
 import * as userStateActions from '../../../actions/userStateActions.js';
 import RiddleForm from '../display/riddleForm.js';
 import RiddleNavigator from '../display/riddleNavigator.js';
+import RiddleScore from '../display/riddleScore.js';
 
 class RiddleContainer extends React.Component {
     constructor() {
@@ -37,6 +38,15 @@ class RiddleContainer extends React.Component {
 	this.setState(state);
 	console.log("state:", this.state);
     }
+    calcScore() {
+	return {
+	    total: Object.values(this.state).length,
+	    correct: Object.values(this.state).filter((riddle) => riddle.correct == true).length,
+	    incorrect: Object.values(this.state).filter((riddle) => riddle.correct == false).length,
+	    unanswered: Object.values(this.state).filter((riddle) => riddle.correct == undefined).length,
+	}
+	 
+    }
     checkAnswer() {
 	const currentRiddle = this.props.currentRiddle;
 	let state = this.state[currentRiddle];
@@ -57,6 +67,7 @@ class RiddleContainer extends React.Component {
 		<RiddleForm question={this.props.riddle.question} answer={riddleData.answer} onChange={this.onChange} onSubmit = {() => this.checkAnswer()} correct = {riddleData.correct} trials={riddleData.trials}/>
 		<RiddleNavigator onPrevious={this.onPrevious} onNext={this.onNext} currentRiddle= {this.props.currentRiddle} numRiddles={this.props.numRiddles}/>
 		</div>
+		<RiddleScore score={calcScore()}/>
 	)
     }
 }
