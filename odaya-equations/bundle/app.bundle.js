@@ -66,7 +66,7 @@
 	
 	var _game2 = _interopRequireDefault(_game);
 	
-	var _contentActions = __webpack_require__(299);
+	var _contentActions = __webpack_require__(301);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -29191,9 +29191,13 @@
 	
 	var _riddleForm2 = _interopRequireDefault(_riddleForm);
 	
-	var _riddleNavigator = __webpack_require__(298);
+	var _riddleNavigator = __webpack_require__(299);
 	
 	var _riddleNavigator2 = _interopRequireDefault(_riddleNavigator);
+	
+	var _odaya = __webpack_require__(300);
+	
+	var _odaya2 = _interopRequireDefault(_odaya);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -29251,6 +29255,24 @@
 										console.log("state:", this.state);
 							}
 				}, {
+							key: 'calcScore',
+							value: function calcScore() {
+										var total = this.props.numRiddles;
+										var correct = Object.values(this.state).filter(function (riddle) {
+													return riddle.correct == true;
+										}).length;
+										var incorrect = Object.values(this.state).filter(function (riddle) {
+													return riddle.correct == false;
+										}).length;
+										var unanswered = total - (correct + incorrect);
+										return {
+													total: total,
+													correct: correct,
+													incorrect: incorrect,
+													unanswered: unanswered
+										};
+							}
+				}, {
 							key: 'checkAnswer',
 							value: function checkAnswer() {
 										var currentRiddle = this.props.currentRiddle;
@@ -29276,8 +29298,8 @@
 													null,
 													_react2.default.createElement(_riddleForm2.default, { question: this.props.riddle.question, answer: riddleData.answer, onChange: this.onChange, onSubmit: function onSubmit() {
 																			return _this2.checkAnswer();
-																}, correct: riddleData.correct, trials: riddleData.trials }),
-													_react2.default.createElement(_riddleNavigator2.default, { onPrevious: this.onPrevious, onNext: this.onNext, currentRiddle: this.props.currentRiddle, numRiddles: this.props.numRiddles })
+																}, correct: riddleData.correct, trials: riddleData.trials, currentRiddle: this.props.currentRiddle, numRiddles: this.props.numRiddles, onNext: this.onNext, onPrevious: this.onPrevious, score: this.calcScore() }),
+													_react2.default.createElement(_odaya2.default, null)
 										);
 							}
 				}]);
@@ -29333,7 +29355,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-				value: true
+												value: true
 	});
 	
 	var _react = __webpack_require__(16);
@@ -29344,42 +29366,81 @@
 	
 	var _TextInput2 = _interopRequireDefault(_TextInput);
 	
+	var _riddleScore = __webpack_require__(298);
+	
+	var _riddleScore2 = _interopRequireDefault(_riddleScore);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var RiddleForm = function RiddleForm(_ref) {
-				var question = _ref.question,
-				    answer = _ref.answer,
-				    correct = _ref.correct,
-				    trials = _ref.trials,
-				    onChange = _ref.onChange,
-				    onSubmit = _ref.onSubmit;
+												var question = _ref.question,
+												    answer = _ref.answer,
+												    correct = _ref.correct,
+												    trials = _ref.trials,
+												    onChange = _ref.onChange,
+												    onSubmit = _ref.onSubmit,
+												    currentRiddle = _ref.currentRiddle,
+												    numRiddles = _ref.numRiddles,
+												    onNext = _ref.onNext,
+												    onPrevious = _ref.onPrevious,
+												    score = _ref.score;
 	
-				if (trials != undefined) {
-							trials = trials.toString();
-				}
-				return _react2.default.createElement(
-							'div',
-							null,
-							_react2.default.createElement(
-										'div',
-										{ className: 'h1 question' },
-										question
-							),
-							_react2.default.createElement(
-										'div',
-										{ className: 'submit-btn col-lg-2' },
-										_react2.default.createElement(
-													'button',
-													{ type: 'button', className: 'btn btn-primary btn-lg', onClick: onSubmit },
-													'          \u05D4\u05D2\u05E9'
-										)
-							),
-							_react2.default.createElement(
-										'div',
-										{ className: 'col-lg-10' },
-										_react2.default.createElement(_TextInput2.default, { label: '', value: answer, name: 'answer', placeholder: '\u05EA\u05D7\u05E9\u05D5\u05D1 \u05D8\u05D5\u05D1 \u05DC\u05E4\u05E0\u05D9 \u05E9\u05D0\u05EA\u05D4 \u05E2\u05D5\u05E0\u05D4', onChange: onChange, correct: correct })
-							)
-				);
+												if (trials != undefined) {
+																							trials = trials.toString();
+												}
+												return _react2.default.createElement(
+																							'div',
+																							null,
+																							_react2.default.createElement(
+																																		'div',
+																																		{ className: 'row h3 stage' },
+																																		(currentRiddle + 1).toString(),
+																																		'/',
+																																		numRiddles.toString()
+																							),
+																							_react2.default.createElement(
+																																		'div',
+																																		{ className: 'row h1 question' },
+																																		question
+																							),
+																							_react2.default.createElement(
+																																		'div',
+																																		{ className: 'row' },
+																																		_react2.default.createElement(_riddleScore2.default, { score: score }),
+																																		_react2.default.createElement(
+																																													'div',
+																																													{ className: 'col-lg-1' },
+																																													_react2.default.createElement(
+																																																								'button',
+																																																								{ type: 'button', className: 'btn btn-primary btn-lg', onClick: onNext },
+																																																								'>'
+																																													)
+																																		),
+																																		_react2.default.createElement(
+																																													'div',
+																																													{ className: 'col-lg-1' },
+																																													_react2.default.createElement(
+																																																								'button',
+																																																								{ type: 'button', className: 'btn btn-primary btn-lg', onClick: onSubmit },
+																																																								'             \u05D4\u05D2\u05E9'
+																																													)
+																																		),
+																																		_react2.default.createElement(
+																																													'div',
+																																													{ className: 'col-lg-5 answer' },
+																																													_react2.default.createElement(_TextInput2.default, { label: '', value: answer, name: 'answer', placeholder: '\u05EA\u05D7\u05E9\u05D5\u05D1 \u05D8\u05D5\u05D1 \u05DC\u05E4\u05E0\u05D9 \u05E9\u05D0\u05EA\u05D4 \u05E2\u05D5\u05E0\u05D4', onChange: onChange, correct: correct })
+																																		),
+																																		_react2.default.createElement(
+																																													'div',
+																																													{ className: 'col-lg-1' },
+																																													_react2.default.createElement(
+																																																								'button',
+																																																								{ type: 'button', className: 'btn btn-primary btn-lg', onClick: onPrevious },
+																																																								'< '
+																																													)
+																																		)
+																							)
+												);
 	};
 	
 	exports.default = RiddleForm;
@@ -29400,8 +29461,12 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var error = "תחשוב עוד קצת...";
-	var bravo = "כל הכבוד!";
+	var errors = ["תחשבי עוד קצת...😏", "באמת,ציפיתי ליותר!!!!😠", "איזה גרועה….😱", "לא נורא, נסי שוב😜", "מטעויות לומדים… תנסי עוד פעם!😘", "מה?! זה היה ממש קל!😩", "איך טעית בזה?! זה היה ממש קל!😪"];
+	var bravos = ["וואי איזה אדירה את!!😁", "את ממש חכמה!😉", "מצויין:)😃", "עלי והצליחי!😊", "כל הכבוד😁"];
+	
+	var randomElem = function randomElem(items) {
+	    return items[Math.floor(Math.random() * items.length)];
+	};
 	
 	var TextInput = function TextInput(_ref) {
 	    var name = _ref.name,
@@ -29418,7 +29483,6 @@
 	    if (correct === true) {
 	        wrapperClass += " " + 'has-success';
 	    }
-	
 	    return _react2.default.createElement(
 	        "div",
 	        { className: wrapperClass },
@@ -29439,13 +29503,13 @@
 	                onChange: onChange }),
 	            correct == false && _react2.default.createElement(
 	                "div",
-	                { className: "alert alert-danger" },
-	                error
+	                { className: "h2 alert alert-danger" },
+	                randomElem(errors)
 	            ),
 	            correct == true && _react2.default.createElement(
 	                "div",
-	                { className: "alert alert-success" },
-	                bravo
+	                { className: "h2 alert alert-success" },
+	                randomElem(bravos)
 	            )
 	        )
 	    );
@@ -29469,6 +29533,41 @@
 	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(16);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var RiddleScore = function RiddleScore(_ref) {
+	    var score = _ref.score;
+	    var correct = score.correct,
+	        incorrect = score.incorrect,
+	        unanswered = score.unanswered,
+	        total = score.total;
+	
+	    return _react2.default.createElement(
+	        "div",
+	        { className: "h1 score col-lg-3" },
+	        "\u05E0\u05D9\u05E7\u05D5\u05D3:  ",
+	        correct.toString(),
+	        "/",
+	        total.toString()
+	    );
+	};
+	
+	exports.default = RiddleScore;
+
+/***/ },
+/* 299 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
 	
@@ -29486,7 +29585,7 @@
 	
 		return _react2.default.createElement(
 			"div",
-			null,
+			{ className: "row" },
 			_react2.default.createElement(
 				"div",
 				{ className: "col-lg-4" },
@@ -29494,17 +29593,6 @@
 					"button",
 					{ type: "button", className: "btn btn-primary btn-lg pull-left", onClick: onNext },
 					"\u05D4\u05DE\u05E9\u05DA"
-				)
-			),
-			_react2.default.createElement(
-				"div",
-				{ className: "col-lg-4" },
-				_react2.default.createElement(
-					"div",
-					{ className: "h1" },
-					(currentRiddle + 1).toString(),
-					"/",
-					numRiddles.toString()
 				)
 			),
 			_react2.default.createElement(
@@ -29522,7 +29610,42 @@
 	exports.default = RiddleNavigator;
 
 /***/ },
-/* 299 */
+/* 300 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(16);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Odaya = function Odaya() {
+	    return _react2.default.createElement(
+	        "div",
+	        null,
+	        _react2.default.createElement(
+	            "div",
+	            { className: "row h1 col-lg-6 pull-right odaya" },
+	            "\u05DE\u05D2\u05D9\u05E9\u05D4: \u05D4\u05D5\u05D3\u05D9\u05D4 \u05E9\u05E8\u05D1\u05D9\u05D8 \u05D72"
+	        ),
+	        _react2.default.createElement(
+	            "div",
+	            { className: "row" },
+	            _react2.default.createElement("img", { className: "profile", src: "./images/odaya.png" })
+	        )
+	    );
+	};
+	
+	exports.default = Odaya;
+
+/***/ },
+/* 301 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -29532,11 +29655,35 @@
 	});
 	exports.getAllRiddles = getAllRiddles;
 	var riddles = [{
-	    question: "הגיל שלי הוא 5 פעמים הגיל שלך. מהו הגיל שלי?",
-	    answer: "4"
+	    question: "לי ולך יש אותו סכום של כסף, כמה אני צריך לתת לך כדי שיהיה לך 10 שקל יותר ממני?",
+	    answer: "5"
 	}, {
-	    question: "2000+2=?",
-	    answer: "2002"
+	    question: "תלמידים אספו כסף כדי לקנות מתנה למורה שלהם, בסך הכל התלמידים אספו 74 שקלים עם מטבעות של שקל ומטבעות של 2 שקל. בסך הכל הם אספו 43 מטבעות. כמה מטבעות של 2 הם אספו? ",
+	    answer: "31"
+	}, {
+	    question: "שני מספרים שהסכום שלהם הוא 16 וההפרש ביניהם הוא 2. מהו המספר הקטן מביניהם?",
+	    answer: "7"
+	}, {
+	    question: "מספר דו ספרתי שמסתיים ב4 ששווה 6 פעמים לסכום ספרותיו",
+	    answer: "54"
+	}, {
+	    question: "3 מספרים עוקבים שהסכום שלהם הוא	40. מהו המספר הקטן מביניהם?",
+	    answer: "12"
+	}, {
+	    question: "ליוסי יש 10 חיות, כלבים וחתולים, חתול אוכל 5 עוגיות וכלב אוכל 6 עוגיות, יוסי נתן בסך הכל 56 עוגיות, כמה חתולים יש ליוסי?",
+	    answer: "6"
+	}, {
+	    question: "3 ילדים קיבלו סוכריות, הראשון קיבל 10 סוכריות יותר מהשני והשני קיבל 10 סוכריות יותר מהשלישי בסך הכל הם קיבלו 30 סוכריות, כמה סוכריות הילד הראשון קיבל?",
+	    answer: "20"
+	}, {
+	    question: "בעוד 10 שנים הגיל שלי יהיה פי 3 מהגיל שלי לפני 10 שנים, מהו גילי היום?",
+	    answer: "20"
+	}, {
+	    question: "היום הגיל של דוד הוא פעמים הגיל של איתי, בעוד 5 שנים סכום הגילאים שלהם יהיה 65, מה הגיל של איתי?",
+	    answer: "10"
+	}, {
+	    question: "אני בן 20. הגיל שלי הוא כפול מהגיל שהיה לך כשהייתי בגילך, בן כמה אתה?",
+	    answer: "15"
 	}];
 	
 	function getAllRiddles() {

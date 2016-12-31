@@ -1,12 +1,13 @@
 import React, {PropTypes}  from 'react';
 
-const RiddleScore = ({correct, incorrect, unanswered, total}) => {
+const RiddleScore = ({score}) => {
+    let {correct, incorrect, unanswered, total} = score;
     return (
-	    <div>
-	      <div className="col-lg-1 col-lg-offset-4">
-	      { (correct).toString()}/{total.toString()}
+	    
+	    <div className="h1 score col-lg-3">
+	    ניקוד:  { correct.toString()}/{total.toString()}
               </div>
-	    </div>
+	    
     )
 }
 

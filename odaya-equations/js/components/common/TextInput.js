@@ -1,7 +1,23 @@
 import React, {PropTypes} from 'react';
 
-const error = "תחשוב עוד קצת...";
-const bravo = "כל הכבוד!";
+const errors = ["תחשבי עוד קצת...😏",
+                "באמת,ציפיתי ליותר!!!!😠",
+                "איזה גרועה….😱",
+                "לא נורא, נסי שוב😜",
+                "מטעויות לומדים… תנסי עוד פעם!😘",
+                "מה?! זה היה ממש קל!😩",
+                "איך טעית בזה?! זה היה ממש קל!😪",
+               ];
+const bravos = [
+    "וואי איזה אדירה את!!😁",
+    "את ממש חכמה!😉",
+    "מצויין:)😃",
+    "עלי והצליחי!😊",
+    "כל הכבוד😁",
+
+];
+
+let randomElem = (items) =>  items[Math.floor(Math.random()*items.length)];
 
 const TextInput = ({name, label, onChange, placeholder, value, correct}) => {
     let wrapperClass = 'form-group';
@@ -11,7 +27,6 @@ const TextInput = ({name, label, onChange, placeholder, value, correct}) => {
     if (correct === true) {
         wrapperClass += " " + 'has-success';
     }
-
     return (
 
         <div className={wrapperClass}>
@@ -24,8 +39,8 @@ const TextInput = ({name, label, onChange, placeholder, value, correct}) => {
                     placeholder={placeholder}
                     value={value || ''}
                     onChange={onChange}/>
-                        {correct == false && <div className="alert alert-danger">{error}</div>}
-	                {correct == true && <div className="alert alert-success">{bravo}</div>}
+            {correct == false && <div className="h2 alert alert-danger">{randomElem(errors)}</div>}
+	{correct == true && <div className="h2 alert alert-success">{randomElem(bravos)}</div>}
             </div>
         </div>
     );

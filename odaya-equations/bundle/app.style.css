@@ -8153,9 +8153,37 @@ body {
   border: 3px dotted #337ab7;
   box-shadow: inset 0 -1px 0 0 #337ab7, inset 0 1px 0 0 #337ab7, 0 1px 0 0 #337ab7, 0 -1px 0 0 #337ab7;
   margin-bottom: 1px;
+  color: #337ab7;
+  height: 200px; }
+
+.odaya {
+  color: white; }
+
+.profile {
+  width: 100px;
+  border: 4px solid #3e2b14;
+  padding: 5px; }
+
+.stage {
+  color: white; }
+
+.score {
+  margin-top: 13px;
+  margin-right: 10px;
+  padding: 10px 10px 10px 10px;
+  background: white;
+  border: 3px dotted #337ab7;
+  box-shadow: inset 0 -1px 0 0 #337ab7, inset 0 1px 0 0 #337ab7, 0 1px 0 0 #337ab7, 0 -1px 0 0 #337ab7;
+  margin-bottom: 1px;
   color: #337ab7; }
 
-.submit-btn {
-  margin-top: 13px; }
+.btn {
+  margin-top: 13px;
+  margin-right: 10px;
+  margin-left: 10px; }
+
+.answer {
+  margin-left: 10px;
+  margin-right: 10px; }
 
 /*# sourceMappingURL=app.style.css.map*/

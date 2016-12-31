@@ -4,7 +4,8 @@ import {bindActionCreators} from 'redux';
 import * as userStateActions from '../../../actions/userStateActions.js';
 import RiddleForm from '../display/riddleForm.js';
 import RiddleNavigator from '../display/riddleNavigator.js';
-import RiddleScore from '../display/riddleScore.js';
+import Odaya from '../display/odaya.js';
+
 
 class RiddleContainer extends React.Component {
     constructor() {
@@ -39,13 +40,16 @@ class RiddleContainer extends React.Component {
 	console.log("state:", this.state);
     }
     calcScore() {
+	const total = this.props.numRiddles;
+	const correct = Object.values(this.state).filter((riddle) => riddle.correct == true).length;
+        const incorrect = Object.values(this.state).filter((riddle) => riddle.correct == false).length;
+	const unanswered = total - (correct + incorrect);
 	return {
-	    total: Object.values(this.state).length,
-	    correct: Object.values(this.state).filter((riddle) => riddle.correct == true).length,
-	    incorrect: Object.values(this.state).filter((riddle) => riddle.correct == false).length,
-	    unanswered: Object.values(this.state).filter((riddle) => riddle.correct == undefined).length,
-	}
-	 
+	    total,
+	    correct,
+	    incorrect,
+	    unanswered,
+	};
     }
     checkAnswer() {
 	const currentRiddle = this.props.currentRiddle;
@@ -64,10 +68,9 @@ class RiddleContainer extends React.Component {
 	const riddleData = this.state[this.props.currentRiddle] || {answer: ""};
 	return (
 		<div>
-		<RiddleForm question={this.props.riddle.question} answer={riddleData.answer} onChange={this.onChange} onSubmit = {() => this.checkAnswer()} correct = {riddleData.correct} trials={riddleData.trials}/>
-		<RiddleNavigator onPrevious={this.onPrevious} onNext={this.onNext} currentRiddle= {this.props.currentRiddle} numRiddles={this.props.numRiddles}/>
+		<RiddleForm question={this.props.riddle.question} answer={riddleData.answer} onChange={this.onChange} onSubmit = {() => this.checkAnswer()} correct = {riddleData.correct} trials={riddleData.trials} currentRiddle={this.props.currentRiddle} numRiddles={this.props.numRiddles} onNext={this.onNext} onPrevious={this.onPrevious} score={this.calcScore()}/>
+               <Odaya/>
 		</div>
-		<RiddleScore score={calcScore()}/>
 	)
     }
 }
